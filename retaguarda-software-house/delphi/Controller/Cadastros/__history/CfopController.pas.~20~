@@ -1,0 +1,187 @@
+unit CfopController;
+
+interface
+
+uses
+  mvcframework,
+  mvcframework.Commons,
+  System.SysUtils,
+  MVCFramework.SystemJSONUtils;
+
+type
+
+  [MVCDoc('CRUD CFOP')]
+  [MVCPath('/cfop')]
+  TCfopController = class(TMVCController)
+    private
+
+    public
+
+      [MVCDoc('Retorna uma Lista de Objetos')]
+      [MVCPath('/($filtro)')]
+      [MVCHTTPMethod([httpGET])]
+      procedure ConsultaLista(aContext: TWebContext);
+      [MVCDoc('Retorna um objeto com base no Codigo')]
+      [MVCPath('/($Codigo)')]
+      [MVCHTTPMethod([httpGET])]
+      procedure ConsultaObjeto(aCodigo: Integer);
+      [MVCDoc('Inserir um novo Objeto')]
+      [MVCPath]
+      [MVCHTTPMethod([httpPOST])]
+      procedure Inserir(aContext : TWebContext);
+      [MVCDoc('Altera um objeto com base no ID')]
+      [MVCPath]
+      [MVCHTTPMethod([httpPUT])]
+      procedure Alterar(aContext : TWebContext);
+      [MVCDoc('Exclui um objeto com base no ID')]
+      [MVCPath('/($codigo)')]
+      [MVCHTTPMethod([httpDelete])]
+      procedure Excluir(codigo: Integer);
+
+  end;
+implementation
+
+uses
+  Filtro,
+  Cfop,
+  Commons,
+  CfopService;
+
+{ TCfopController }
+
+procedure TCfopController.Alterar(aContext : TWebContext);
+var
+  lCfop, lCfopBD : TCfop;
+begin
+  try
+    lCfop := aContext.Request.BodyAs<TCfop>;
+  except
+     on E: EServiceException do
+     begin
+       raise EMVCException.Create
+        ('Objeto inválido [Alterar CFOP] - Exceção: ' + E.Message, E.StackTrace, 0, 400);
+     end else
+      raise;
+  end;
+
+  lCfopBD := TCfopService.ConsultarObjeto(lCfop.codigo);
+
+  if not Assigned(lCfopBD) then
+    raise EMVCException.Create
+      ('Objeto com codigo inválido [Alterar CFOP]','', 0, 400);
+
+    if TCfopService.Alterar(lCfop) > 0 then
+      Render(TCfopService.ConsultarObjeto(lCfop.codigo))
+    else
+      raise EMVCException.Create
+        ('Nenhum registro foi alterado [Alterar CFOP]','', 0, 500);
+
+end;
+
+procedure TCfopController.ConsultaLista(aContext: TWebContext);
+var
+  lFiltroUrl, lFiltroWhere : string;
+  lFiltroObj : TFiltro;
+begin
+  lFiltroUrl := aContext.Request.Params['filtro'];
+  if Trim(lFiltroUrl) <> '' then
+  begin
+    ConsultaObjeto(StrToInt(lFiltroUrl));
+    Exit;
+  end;
+
+  lFiltroWhere := aContext.Request.Params['filter'];
+
+
+  try
+    if Trim(lFiltroWhere) = '' then
+    begin
+      Render<TCfop>(TCfopService.ConsultarLista);
+    end else
+    begin
+      lFiltroObj := TFiltro.Create(lFiltroWhere);
+      Render<TCfop>(TCfopService.ConsultarListaFiltro(lFiltroObj.Where));
+    end;
+  except
+    on E: EServiceException do
+    begin
+      raise EMVCException.Create
+      ('Erro no servidor [Consulta Lista CFOP] - Exceção: ' + E.Message,
+      E.StackTrace, 0, 500);
+    end else
+      raise;
+  end;
+end;
+
+procedure TCfopController.ConsultaObjeto(aCodigo: Integer);
+var
+  lCfop : TCfop;
+begin
+
+    try
+      lCfop := TCfopService.ConsultarObjeto(aCodigo);
+
+      if Assigned(lCfop) then
+        Render(lCfop)
+      else
+        raise EMVCException.Create
+          ('Registro não localizado [Consultar Objeto CFOP]', '', 0, 404);
+    except
+      on E: EServiceException do
+      begin
+      raise EMVCException.Create
+        ('Erro no Servidor [Consultar Objeto CFOP] - Exceção: ' + E.Message,
+        E.StackTrace, 0, 500);
+      end else
+        raise;
+    end;
+  
+end;
+
+procedure TCfopController.Excluir(codigo: Integer);
+var
+  lCfop : TCfop;
+begin
+  lCfop := TCfopService.ConsultarObjeto(codigo);
+
+  if not Assigned(lCfop) then
+    raise EMVCException.Create
+      ('Objeto com Codigo inválido [Excluir CFOP]','', 0, 400);
+  if TCfopService.Excluir(lCfop) > 0 then
+    Render(200, 'Obejeto excluído com sucesso.')
+  else
+    raise EMVCException.Create
+      ('Nenhum registro foi excluído [Excluir CFOP]','', 0, 500);
+end;
+
+procedure TCfopController.Inserir(aContext: TWebContext);
+var
+  lCfop : TCfop;
+begin
+
+    try
+      lCfop := Context.Request.BodyAs<TCfop>;
+    except
+      on E: EServiceException do
+      begin
+          raise EMVCException.Create
+            ('Objeto inválido [Inserir CFOP] - Exceção: '+ E.Message, E.StackTrace, 0 ,400);
+      end else
+        raise;
+     end;
+
+    try
+      TCfopService.Inserir(lCfop);
+      Render(TCfopService.ConsultarObjeto(lCfop.ID));
+    except
+      on E: EServiceException do
+      begin
+          raise EMVCException.Create
+            ('Problema na inserção [Inserir CFOP] - Exceção: '+ E.Message, E.StackTrace, 0 ,400);
+      end else
+        raise;
+    end;
+
+end;
+
+end.

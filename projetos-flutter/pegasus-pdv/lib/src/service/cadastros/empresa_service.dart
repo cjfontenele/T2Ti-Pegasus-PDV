@@ -55,7 +55,7 @@ class EmpresaService extends ServiceBase {
         } else {
           var empresaJson = json.decode(response.body);
           return EmpresaConsultaPublica.fromJson(empresaJson);
-      }
+        }
       } else {
         tratarRetornoErro(response.body, response.headers);
         return null;
@@ -91,12 +91,20 @@ class EmpresaService extends ServiceBase {
       return null;
     }
   }
-  
+
   Future<EmpresaModel?> registrar(EmpresaModel empresa) async {
     try {
-      ServiceBase.cabecalhoRequisicao = Constantes.linguagemServidor == 'delphi' 
-                            ? {"content-type": "application/json", "authentication": "Bearer " + Sessao.tokenJWT, "operacao": "registrar"} 
-                            : {"content-type": "application/json", "authorization": "Bearer " + Sessao.tokenJWT, "operacao": "registrar"};      
+      ServiceBase.cabecalhoRequisicao = Constantes.linguagemServidor == 'delphi'
+          ? {
+              "content-type": "application/json",
+              "authentication": "Bearer " + Sessao.tokenJWT,
+              "operacao": "registrar"
+            }
+          : {
+              "content-type": "application/json",
+              "authorization": "Bearer " + Sessao.tokenJWT,
+              "operacao": "registrar"
+            };
 
       final response = await clienteHTTP.post(
         Uri.tryParse('$endpoint/empresa/' + empresa.cnpj!)!,
@@ -128,9 +136,17 @@ class EmpresaService extends ServiceBase {
 
   Future<bool> reenviarEmail(EmpresaModel empresa) async {
     try {
-      ServiceBase.cabecalhoRequisicao = Constantes.linguagemServidor == 'delphi' 
-                            ? {"content-type": "application/json", "authentication": "Bearer " + Sessao.tokenJWT, "operacao": "reenviar-email"} 
-                            : {"content-type": "application/json", "authorization": "Bearer " + Sessao.tokenJWT, "operacao": "reenviar-email"};      
+      ServiceBase.cabecalhoRequisicao = Constantes.linguagemServidor == 'delphi'
+          ? {
+              "content-type": "application/json",
+              "authentication": "Bearer " + Sessao.tokenJWT,
+              "operacao": "reenviar-email"
+            }
+          : {
+              "content-type": "application/json",
+              "authorization": "Bearer " + Sessao.tokenJWT,
+              "operacao": "reenviar-email"
+            };
 
       final response = await clienteHTTP.post(
         Uri.tryParse('$endpoint/empresa/' + empresa.cnpj!)!,
@@ -155,11 +171,22 @@ class EmpresaService extends ServiceBase {
     }
   }
 
-  Future<EmpresaModel?> conferirCodigoConfirmacao(EmpresaModel empresa, String codigoConfirmacao) async {
+  Future<EmpresaModel?> conferirCodigoConfirmacao(
+      EmpresaModel empresa, String codigoConfirmacao) async {
     try {
-      ServiceBase.cabecalhoRequisicao = Constantes.linguagemServidor == 'delphi' 
-                            ? {"content-type": "application/json", "authentication": "Bearer " + Sessao.tokenJWT, "operacao": "confirmar-codigo", "codigo-confirmacao": codigoConfirmacao} 
-                            : {"content-type": "application/json", "authorization": "Bearer " + Sessao.tokenJWT, "operacao": "confirmar-codigo", "codigo-confirmacao": codigoConfirmacao};      
+      ServiceBase.cabecalhoRequisicao = Constantes.linguagemServidor == 'delphi'
+          ? {
+              "content-type": "application/json",
+              "authentication": "Bearer " + Sessao.tokenJWT,
+              "operacao": "confirmar-codigo",
+              "codigo-confirmacao": codigoConfirmacao
+            }
+          : {
+              "content-type": "application/json",
+              "authorization": "Bearer " + Sessao.tokenJWT,
+              "operacao": "confirmar-codigo",
+              "codigo-confirmacao": codigoConfirmacao
+            };
 
       final response = await clienteHTTP.post(
         Uri.tryParse('$endpoint/empresa/' + empresa.cnpj!)!,
@@ -183,10 +210,9 @@ class EmpresaService extends ServiceBase {
       tratarRetornoErro(null, null, exception: e);
       return null;
     }
-     /* use para uma release de testes
+    /* use para uma release de testes
     empresa.registrado = "S";
     return empresa;
     */
- }
-
+  }
 }

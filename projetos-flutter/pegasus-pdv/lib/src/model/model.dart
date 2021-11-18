@@ -36,6 +36,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 // módulo cadastros
 export 'package:pegasus_pdv/src/model/cadastros/usuario_model.dart';
+export 'package:pegasus_pdv/src/model/cadastros/cfop_model.dart';
 export 'package:pegasus_pdv/src/model/cadastros/empresa_model.dart';
 export 'package:pegasus_pdv/src/model/cadastros/empresa_consulta_publica.dart';
 export 'package:pegasus_pdv/src/model/cadastros/pdv_tipo_plano_model.dart';

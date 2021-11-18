@@ -37,7 +37,9 @@ unit EmpresaController;
 
 interface
 
-uses mvcframework, mvcframework.Commons,
+uses
+  mvcframework,
+  mvcframework.Commons,
   System.SysUtils,
   MVCFramework.SystemJSONUtils;
 
@@ -82,7 +84,12 @@ implementation
 
 { TEmpresaController }
 
-uses EmpresaService, Empresa, Commons, Filtro, Constantes;
+uses
+  EmpresaService,
+  Empresa,
+  Commons,
+  Filtro,
+  Constantes;
 
 //procedure TEmpresaController.ConsultarLista(Context: TWebContext);
 //var

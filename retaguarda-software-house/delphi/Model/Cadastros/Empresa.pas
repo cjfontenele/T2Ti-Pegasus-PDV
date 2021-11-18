@@ -38,7 +38,8 @@ unit Empresa;
 interface
 
 uses
-  MVCFramework.Serializer.Commons, ModelBase;
+  MVCFramework.Serializer.Commons,
+  ModelBase;
 
 type
 

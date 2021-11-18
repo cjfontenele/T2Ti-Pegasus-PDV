@@ -3,8 +3,12 @@ unit ServiceBase;
 interface
 
 uses
-  System.SysUtils, UDataModuleConexao, MVCFramework.Serializer.Commons,
-  FireDAC.Comp.Client, Rtti, MVCFramework.Logger;
+  System.SysUtils,
+  UDataModuleConexao,
+  MVCFramework.Serializer.Commons,
+  FireDAC.Comp.Client,
+  Rtti,
+  MVCFramework.Logger;
 
 type
 

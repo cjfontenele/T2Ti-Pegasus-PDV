@@ -37,63 +37,76 @@ import 'package:moor/moor.dart';
 
 import 'package:pegasus_pdv/src/database/database.dart';
 import 'package:pegasus_pdv/src/database/database_classes.dart';
-
 part 'cfop_dao.g.dart';
 
 @UseDao(tables: [
-          Cfops,
-		])
+  Cfops,
+])
 class CfopDao extends DatabaseAccessor<AppDatabase> with _$CfopDaoMixin {
   final AppDatabase db;
 
+  List<Cfop>?
+      listaCfop; // será usada para popular a grid na janela do produtoUnidade
+
   CfopDao(this.db) : super(db);
 
-  Future<List<Cfop>> consultarLista() => select(cfops).get();
+  Future<List<Cfop>?> consultarLista() async {
+    listaCfop = await select(cfops).get();
+    return listaCfop;
+  }
 
-  Future<List<Cfop>> consultarListaFiltro(String campo, String valor) async {
-    return (customSelect("SELECT * FROM CFOP WHERE " + campo + " like '%" + valor + "%'", 
-                                readsFrom: { cfops }).map((row) {
-                                  return Cfop.fromData(row.data, db);  
-                                }).get());
+  Future<List<Cfop>?> consultarListaFiltro(String campo, String valor) async {
+    return (customSelect(
+        "SELECT * FROM CFOP WHERE " + campo + " like '%" + valor + "%'",
+        readsFrom: {cfops}).map((row) {
+      return Cfop.fromData(row.data, db);
+    }).get());
+  }
+
+  Future<Cfop?> consultarObjetoFiltro(String campo, String valor) async {
+    return (customSelect(
+        "SELECT * FROM CFOP WHERE " + campo + " = '" + valor + "'",
+        readsFrom: {cfops}).map((row) {
+      return Cfop.fromData(row.data, db);
+    }).getSingleOrNull());
   }
 
   Stream<List<Cfop>> observarLista() => select(cfops).watch();
 
   Future<Cfop?> consultarObjeto(int pId) {
     return (select(cfops)..where((t) => t.id.equals(pId))).getSingleOrNull();
-  } 
+  }
 
   Future<int> inserir(Insertable<Cfop> pObjeto) {
     return transaction(() async {
       final idInserido = await into(cfops).insert(pObjeto);
       return idInserido;
-    });    
-  } 
+    });
+  }
 
   Future<bool> alterar(Insertable<Cfop> pObjeto) {
     return transaction(() async {
       return update(cfops).replace(pObjeto);
-    });    
-  } 
+    });
+  }
 
   Future<int> excluir(Insertable<Cfop> pObjeto) {
     return transaction(() async {
       return delete(cfops).delete(pObjeto);
-    });    
+    });
   }
 
-	static List<String> campos = <String>[
-		'ID', 
-		'CODIGO', 
-		'DESCRICAO', 
-		'APLICACAO', 
-	];
-	
-	static List<String> colunas = <String>[
-		'Id', 
-		'Codigo', 
-		'Descricao', 
-		'Aplicacao', 
-	];
-  
+  static List<String> campos = <String>[
+    'ID',
+    'CODIGO',
+    'DESCRICAO',
+    'APLICACAO',
+  ];
+
+  static List<String> colunas = <String>[
+    'Id',
+    'Codigo',
+    'Descricao',
+    'Aplicacao',
+  ];
 }

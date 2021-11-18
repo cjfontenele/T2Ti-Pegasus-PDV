@@ -20,7 +20,7 @@ import 'package:sqlite3/open.dart';
 import 'package:pegasus_pdv/src/view/shared/page/splash_screen_page.dart';
 import 'package:pegasus_pdv/src/view/page/page.dart';
 
-void main() async {  
+void main() async {
   await dotenv.load(fileName: ".env");
 
   if (Platform.isWindows) {
@@ -33,6 +33,7 @@ void main() async {
   CatcherOptions debugOptions = CatcherOptions(
     ///Vai mostrar o erro numa caixa de diálogo
     DialogReportMode(),
+
     ///Vai mostrar o erro numa página
     // PageReportMode(showStackTrace: true),
     [
@@ -47,13 +48,14 @@ void main() async {
     localizationOptions: [
       LocalizationOptions.buildDefaultPortugueseOptions(),
     ],
-    customParameters: {"versao-atual": Constantes.versaoApp}, 
+    customParameters: {"versao-atual": Constantes.versaoApp},
   );
 
   ///configuração para tratar erros em modo de release (produção)
   CatcherOptions releaseOptions = CatcherOptions(
     ///Vai mostrar o erro numa página
     DialogReportMode(),
+
     ///Vai mostrar o erro numa página
     // PageReportMode(showStackTrace: true),
     [
@@ -68,10 +70,10 @@ void main() async {
     localizationOptions: [
       LocalizationOptions.buildDefaultPortugueseOptions(),
     ],
-    customParameters: {"versao-atual": Constantes.versaoApp}, 
+    customParameters: {"versao-atual": Constantes.versaoApp},
   );
 
-  ///Inicia o Catcher e então inicia a aplicação. 
+  ///Inicia o Catcher e então inicia a aplicação.
   ///O Catcher vai pegar e reportar os erros de forma global
   Catcher(
     runAppFunction: () {
@@ -79,7 +81,7 @@ void main() async {
     },
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
-  );  
+  );
 }
 
 DynamicLibrary _openOnWindows() {
@@ -87,10 +89,13 @@ DynamicLibrary _openOnWindows() {
     // final scriptDir = File(Platform.script.toFilePath()).parent;
     // final libraryNextToScript = File('${scriptDir.path}/sqlite3.dll');
     final libraryNextToScript = File('sqlite3.dll');
-    return DynamicLibrary.open(libraryNextToScript.path);    
+    return DynamicLibrary.open(libraryNextToScript.path);
   } catch (e) {
     debugPrint(e.toString());
-    throw 'Erro: ' + DateTime.now().toIso8601String() + ' - Exceção: ' + e.toString();
+    throw 'Erro: ' +
+        DateTime.now().toIso8601String() +
+        ' - Exceção: ' +
+        e.toString();
   }
 }
 
@@ -105,28 +110,27 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Provider<AppDatabase>(
-      create: (context) => AppDatabase(),
-      dispose: (context, db) => db.close(),
-      builder: (context, value) {
-        return FutureBuilder(
-          future: Future.delayed(const Duration(seconds: 3), () async {
-            await Sessao.popularObjetosPrincipais(context);
-            if (Biblioteca.isDesktop()) {
-              await DesktopWindow.setMinWindowSize(const Size(800, 600));
-              await DesktopWindow.resetMaxWindowSize();
-              await DesktopWindow.toggleFullScreen();
-            }
-          }),
-          builder: (context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return _materialApp(splash: true);
-            } else {
-              return _materialApp(splash: false);
-            }
-          },
-        );
-      }
-    );
+        create: (context) => AppDatabase(),
+        dispose: (context, db) => db.close(),
+        builder: (context, value) {
+          return FutureBuilder(
+            future: Future.delayed(const Duration(seconds: 3), () async {
+              await Sessao.popularObjetosPrincipais(context);
+              if (Biblioteca.isDesktop()) {
+                await DesktopWindow.setMinWindowSize(const Size(800, 600));
+                await DesktopWindow.resetMaxWindowSize();
+                await DesktopWindow.toggleFullScreen();
+              }
+            }),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return _materialApp(splash: true);
+              } else {
+                return _materialApp(splash: false);
+              }
+            },
+          );
+        });
   }
 }
 
@@ -144,7 +148,7 @@ Widget _materialApp({bool? splash}) {
     debugShowCheckedModeBanner: false,
     title: Constantes.nomeApp,
     onGenerateRoute: Rotas.definirRotas,
-    theme: ThemeData(), 
+    theme: ThemeData(),
     home: splash == true ? const SplashScreenPage() : const CaixaPage(),
   );
 }

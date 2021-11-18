@@ -77,7 +77,11 @@ implementation
 
 { TPdvTipoPlanoController }
 
-uses PdvTipoPlanoService, PdvTipoPlano, Commons, Filtro;
+uses
+  PdvTipoPlanoService,
+  PdvTipoPlano,
+  Commons,
+  Filtro;
 
 procedure TPdvTipoPlanoController.ConsultarLista(Context: TWebContext);
 var

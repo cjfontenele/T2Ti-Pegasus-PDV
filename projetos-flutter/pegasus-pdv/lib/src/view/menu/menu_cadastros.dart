@@ -73,14 +73,30 @@ class MenuCadastros extends StatelessWidget {
         child: Column(
           children: <Widget>[
             appBarColumn(context),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             actionMenuGrupoPessoa(),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             actionMenuGrupoGeral(),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             // só apresenta o cadastro da tributação se não for o módulo gratuito
-            Sessao.configuracaoPdv!.modulo == 'G' ? const SizedBox(height: 1,) : actionMenuGrupoTributacao(), 
-            Sessao.configuracaoPdv!.modulo == 'G' ? const SizedBox(height: 1,) : const SizedBox(height: 20,),
+            Sessao.configuracaoPdv!.modulo == 'G'
+                ? const SizedBox(
+                    height: 1,
+                  )
+                : actionMenuGrupoTributacao(),
+            Sessao.configuracaoPdv!.modulo == 'G'
+                ? const SizedBox(
+                    height: 1,
+                  )
+                : const SizedBox(
+                    height: 20,
+                  ),
           ],
         ),
       );
@@ -171,7 +187,11 @@ class MenuCadastros extends StatelessWidget {
                   ),
                   MenuInternoBotoes(
                     primeiroBotao: null,
-                    segundoBotao: null,
+                    segundoBotao: BotaoMenu(
+                        icon: FontAwesomeIcons.archive,
+                        label: "CFOP",
+                        circleColor: Colors.indigo,
+                        rota: "/cfopLista"),
                     terceiroBotao: BotaoMenu(
                         icon: FontAwesomeIcons.archive,
                         label: "Unidade",
@@ -190,7 +210,6 @@ class MenuCadastros extends StatelessWidget {
         ),
       );
 
-
   Widget actionMenuGrupoTributacao() => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Card(
@@ -202,7 +221,8 @@ class MenuCadastros extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  const MenuTituloGrupoMenuInterno(titulo: "Cadastros - Tributação"),
+                  const MenuTituloGrupoMenuInterno(
+                      titulo: "Cadastros - Tributação"),
                   MenuInternoBotoes(
                     primeiroBotao: BotaoMenu(
                         icon: FontAwesomeIcons.solidUser,

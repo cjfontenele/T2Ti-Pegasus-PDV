@@ -69,11 +69,12 @@ export 'package:pegasus_pdv/src/view/page/cadastros/produto_unidade/produto_unid
 export 'package:pegasus_pdv/src/view/page/cadastros/produto/produto_lista_page.dart';
 export 'package:pegasus_pdv/src/view/page/cadastros/produto/produto_persiste_page.dart';
 
+export 'package:pegasus_pdv/src/view/page/cadastros/cfop/cfop_lista_page.dart';
+export 'package:pegasus_pdv/src/view/page/cadastros/cfop/cfop_persiste_page.dart';
 
 // Compras
 export 'package:pegasus_pdv/src/view/page/compras/pedido/compra_pedido_cabecalho_lista_page.dart';
 export 'package:pegasus_pdv/src/view/page/compras/pedido/compra_pedido_cabecalho_persiste_page.dart';
-
 
 // Financeiro
 export 'package:pegasus_pdv/src/view/page/financeiro/contas_pagar/contas_pagar_lista_page.dart';

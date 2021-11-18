@@ -41,7 +41,6 @@ import 'package:encrypt/encrypt.dart';
 import 'package:pegasus_pdv/src/infra/infra.dart';
 
 class Constantes {
-
   /// singleton
   factory Constantes() {
     _this ??= Constantes._();
@@ -50,19 +49,32 @@ class Constantes {
   static Constantes? _this;
   Constantes._() : super();
 
-  static const String versaoApp =  'versão 1.0.9 - Outubro/2021';
+  static const String versaoApp = 'versão 1.0.9 - Outubro/2021';
 
 // #region Arquivo ENV
-  static String chave = '#Sua-Chave-de-32-caracteres-aqui'; // #Sua-Chave-de-32-caracteres-aqui tem que alterar para produção e gerar os valores do ENV com a chave correta
+  static String chave =
+      '#Sua-Chave-de-32-caracteres-aqui'; // #Sua-Chave-de-32-caracteres-aqui tem que alterar para produção e gerar os valores do ENV com a chave correta
   static Key key = Key.fromUtf8(Constantes.chave);
   static IV iv = IV.fromUtf8('');
   static Encrypter encrypter = Encrypter(AES(key, mode: AESMode.ecb));
 
-  static String? sentryDns = (kDebugMode && Biblioteca.isDesktop()) ? dotenv.env['SENTRY_DNS'] : encrypter.decrypt64(dotenv.env['SENTRY_DNS']!, iv: iv);
-  static String? linguagemServidor = (kDebugMode && Biblioteca.isDesktop()) ? dotenv.env['LINGUAGEM_SERVIDOR'] : encrypter.decrypt64(dotenv.env['LINGUAGEM_SERVIDOR']!, iv: iv);
-  static String? enderecoServidor = (kDebugMode && Biblioteca.isDesktop()) ? dotenv.env['ENDERECO_SERVIDOR'] : encrypter.decrypt64(dotenv.env['ENDERECO_SERVIDOR']!, iv: iv);
-  static String? complementoEnderecoServidor = (kDebugMode && Biblioteca.isDesktop()) ? dotenv.env['COMPLEMENTO_ENDERECO_SERVIDOR'] : encrypter.decrypt64(dotenv.env['COMPLEMENTO_ENDERECO_SERVIDOR']!, iv: iv);
-  static String? portaServidor = (kDebugMode && Biblioteca.isDesktop()) ? dotenv.env['PORTA_SERVIDOR'] : encrypter.decrypt64(dotenv.env['PORTA_SERVIDOR']!, iv: iv);
+  static String? sentryDns = (kDebugMode && Biblioteca.isDesktop())
+      ? dotenv.env['SENTRY_DNS']
+      : encrypter.decrypt64(dotenv.env['SENTRY_DNS']!, iv: iv);
+  static String? linguagemServidor = (kDebugMode && Biblioteca.isDesktop())
+      ? dotenv.env['LINGUAGEM_SERVIDOR']
+      : encrypter.decrypt64(dotenv.env['LINGUAGEM_SERVIDOR']!, iv: iv);
+  static String? enderecoServidor = (kDebugMode && Biblioteca.isDesktop())
+      ? dotenv.env['ENDERECO_SERVIDOR']
+      : encrypter.decrypt64(dotenv.env['ENDERECO_SERVIDOR']!, iv: iv);
+  static String? complementoEnderecoServidor =
+      (kDebugMode && Biblioteca.isDesktop())
+          ? dotenv.env['COMPLEMENTO_ENDERECO_SERVIDOR']
+          : encrypter.decrypt64(dotenv.env['COMPLEMENTO_ENDERECO_SERVIDOR']!,
+              iv: iv);
+  static String? portaServidor = (kDebugMode && Biblioteca.isDesktop())
+      ? dotenv.env['PORTA_SERVIDOR']
+      : encrypter.decrypt64(dotenv.env['PORTA_SERVIDOR']!, iv: iv);
 
   // static String sentryDns = encrypter.decrypt64(DotEnv.env['SENTRY_DNS'], iv: iv);
   // static String linguagemServidor = encrypter.decrypt64(DotEnv.env['LINGUAGEM_SERVIDOR'], iv: iv);
@@ -75,40 +87,43 @@ class Constantes {
   // static String enderecoServidor = DotEnv.env['ENDERECO_SERVIDOR'];
   // static String complementoEnderecoServidor = DotEnv.env['COMPLEMENTO_ENDERECO_SERVIDOR'];
   // static String portaServidor = DotEnv.env['PORTA_SERVIDOR'];
-// #endregion Arquivo ENV  
-
+// #endregion Arquivo ENV
 
 // #region Inteiros
   static const int decimaisTaxa = 2;
   static final int decimaisValor = Sessao.configuracaoPdv!.decimaisValor ?? 2;
-  static final int decimaisQuantidade = Sessao.configuracaoPdv!.decimaisQuantidade ?? 3;
-  static final int paginatedDataTableLinhasPorPagina = PaginatedDataTable.defaultRowsPerPage;
-// #endregion Inteiros  
-
+  static const int cfop = 0;
+  static final int decimaisQuantidade =
+      Sessao.configuracaoPdv!.decimaisQuantidade ?? 3;
+  static final int paginatedDataTableLinhasPorPagina =
+      PaginatedDataTable.defaultRowsPerPage;
+// #endregion Inteiros
 
 // #region Double
   static const double paddingListViewListaPage = 8.0;
   static const double flutterBootstrapGutterSize = 10.0;
 // #region Double
 
-
 // #region Decimais
   static final formatoDecimalTaxa = NumberFormat('#,##0.00', 'pt_BR');
   static final formatoDecimalValor = NumberFormat('#,##0.00', 'pt_BR');
-  static final formatoDecimalQuantidade = 
-    NumberFormat((Sessao.configuracaoPdv!.decimaisQuantidade == 2 ? '#,##0.00' : '#,##0.000'), 'pt_BR');
+  static final formatoDecimalQuantidade = NumberFormat(
+      (Sessao.configuracaoPdv!.decimaisQuantidade == 2
+          ? '#,##0.00'
+          : '#,##0.000'),
+      'pt_BR');
 // #endregion Decimais
 
-
 // #region Strings
-  static const String nomeApp =  'T2Ti Pegasus PDV';
+  static const String nomeApp = 'T2Ti Pegasus PDV';
   static const String menuCadastrosString = 'T2Ti ERP Fenix - Cadastros';
   static const String menuFinanceiroString = 'T2Ti ERP Fenix - Financeiro';
   static const String menuTributacaoString = 'T2Ti ERP Fenix - Tributação';
   static const String menuEstoqueString = 'T2Ti ERP Fenix - Estoque';
   static const String menuVendasString = 'T2Ti ERP Fenix - Vendas';
   static const String menuComprasString = 'T2Ti ERP Fenix - Compras';
-  static const String menuComissoesString = 'T2Ti ERP Fenix - Gestão de Comissões';
+  static const String menuComissoesString =
+      'T2Ti ERP Fenix - Gestão de Comissões';
   static const String menuOsString = 'T2Ti ERP Fenix - Ordem de Serviço';
   static const String menuAfvString = 'T2Ti ERP Fenix - AFV';
   static const String menuNfseString = 'T2Ti ERP Fenix - NFS-e';
@@ -124,19 +139,31 @@ class Constantes {
   static const String tituloCaixaVendaEmAndamento = '[Vendendo]';
 
   // Descrição botões
-  static const String botaoFiltrarDescricao = kIsWeb == true ? 'Filtro [Ctrl+F11]' : 'Filtro [F11]';
-  static const String botaoImprimirDescricao = kIsWeb == true ? 'Relatório [Ctrl+F8]': 'Relatório [F8]';
-  static const String botaoExcluirDescricao = kIsWeb == true ? 'Excluir [Ctrl+F9]': 'Excluir [F9]';
-  static const String botaoAlterarDescricao = kIsWeb == true ? 'Alterar [Ctrl+F3]': 'Alterar [F3]';
-  static const String botaoSalvarDescricao = kIsWeb == true ? 'Salvar [Ctrl+F12]': 'Salvar [12]';
+  static const String botaoFiltrarDescricao =
+      kIsWeb == true ? 'Filtro [Ctrl+F11]' : 'Filtro [F11]';
+  static const String botaoImprimirDescricao =
+      kIsWeb == true ? 'Relatório [Ctrl+F8]' : 'Relatório [F8]';
+  static const String botaoExcluirDescricao =
+      kIsWeb == true ? 'Excluir [Ctrl+F9]' : 'Excluir [F9]';
+  static const String botaoAlterarDescricao =
+      kIsWeb == true ? 'Alterar [Ctrl+F3]' : 'Alterar [F3]';
+  static const String botaoSalvarDescricao =
+      kIsWeb == true ? 'Salvar [Ctrl+F12]' : 'Salvar [12]';
   // - Caixa
-  static final String botaoCaixaSalvar = Biblioteca.isDesktop() ? 'Salvar [F12]' : 'Salvar';
-  static final String botaoCaixaCancelar = Biblioteca.isDesktop() ? 'Cancelar [F11]' : 'Cancelar';
-  static final String botaoCaixaRecuperar = Biblioteca.isDesktop() ? 'Recuperar [F9]' : 'Recuperar';
-  static final String botaoCaixaDesconto = Biblioteca.isDesktop() ? 'Desconto [F10]' : 'Desconto';
-  static final String botaoCaixaVendedor = Biblioteca.isDesktop() ? 'Vendedor [F3]' : 'Vendedor';
-  static final String botaoCaixaCliente = Biblioteca.isDesktop() ? 'Cliente [F4]' : 'Cliente';
-  static final String botaoCaixaOpcoes = Biblioteca.isDesktop() ? 'Opções [F5]' : 'Opções';
+  static final String botaoCaixaSalvar =
+      Biblioteca.isDesktop() ? 'Salvar [F12]' : 'Salvar';
+  static final String botaoCaixaCancelar =
+      Biblioteca.isDesktop() ? 'Cancelar [F11]' : 'Cancelar';
+  static final String botaoCaixaRecuperar =
+      Biblioteca.isDesktop() ? 'Recuperar [F9]' : 'Recuperar';
+  static final String botaoCaixaDesconto =
+      Biblioteca.isDesktop() ? 'Desconto [F10]' : 'Desconto';
+  static final String botaoCaixaVendedor =
+      Biblioteca.isDesktop() ? 'Vendedor [F3]' : 'Vendedor';
+  static final String botaoCaixaCliente =
+      Biblioteca.isDesktop() ? 'Cliente [F4]' : 'Cliente';
+  static final String botaoCaixaOpcoes =
+      Biblioteca.isDesktop() ? 'Opções [F5]' : 'Opções';
 
   // Dicas botões
   static const String botaoInserirDica = 'Inserir Item [F2]';
@@ -150,20 +177,21 @@ class Constantes {
 
   // Perguntas
   static const String perguntaGerarRelatorio = 'Desejar gerar o relatório?';
-  static const String perguntaSalvarAlteracoes = 'Desejar salvar as alterações?';
-  
+  static const String perguntaSalvarAlteracoes =
+      'Desejar salvar as alterações?';
+
   // Mensagens
-  static const String mensagemCorrijaErrosFormSalvar = 'Por favor, corrija os erros apresentados antes de continuar.';
+  static const String mensagemCorrijaErrosFormSalvar =
+      'Por favor, corrija os erros apresentados antes de continuar.';
 
-
-// #endregion Strings  
-
+// #endregion Strings
 
 // #region Máscaras
   static const String mascaraCPF = '000.000.000-00';
   static const String mascaraCNPJ = '00.000.000/0000-00';
   static const String mascaraCEP = '00000-000';
   static const String mascaraTELEFONE = '(00)00000-0000';
+  static const String mascaraCFOP = '0.000';
   // ignore: constant_identifier_names
   static const String mascaraMES_ANO = '00/0000';
   static const String mascaraHORA = '00:00:00';
@@ -171,8 +199,7 @@ class Constantes {
   static const String mascaraANO = '0000';
   // ignore: constant_identifier_names
   static const String mascaraQUANTIDADE_INTEIRO = '00000';
-// #endregion Máscaras  
-
+// #endregion Máscaras
 
 // #region Fontes
   static const String quickFont = 'Quicksand';
@@ -181,7 +208,6 @@ class Constantes {
   static const String quickNormalFont = 'Quicksand_Book.otf';
   static const String quickLightFont = 'Quicksand_Light.otf';
 // #endregion Fontes
-
 
 // #region Imagens
   //images
@@ -221,7 +247,8 @@ class Constantes {
   static const String menuBiImage = '$imageDir/menu_bi.jpg';
 
   // outras imagens
-  static const String suprimentoSangriaIcon = '$imageDir/suprimento-sangria-icon.jpg';
+  static const String suprimentoSangriaIcon =
+      '$imageDir/suprimento-sangria-icon.jpg';
   static const String informaValorIcon = '$imageDir/informa-valor-icon.png';
   static const String opcoesGerenteIcon = '$imageDir/opcoes-gerente-icon.png';
   static const String caixaIcon = '$imageDir/caixa-icon.png';
@@ -233,7 +260,7 @@ class Constantes {
   static const String dialogInfoIcon = '$imageDir/dialog-info-icon.png';
   static const String dialogErrorIcon = '$imageDir/dialog-error-icon.png';
   static const String nfceBanner = '$imageDir/nfce-banner.png';
-  
+
 // #endregion Imagens
 
 }

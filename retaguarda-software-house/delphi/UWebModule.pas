@@ -2,9 +2,13 @@ unit UWebModule;
 
 interface
 
-uses System.SysUtils, System.Classes, Web.HTTPApp,
+uses
+  System.SysUtils,
+  System.Classes,
+  Web.HTTPApp,
   UAuthCriteria,
-  mvcframework, MVCFramework.JWT;
+  mvcframework,
+  MVCFramework.JWT;
 
 type
   TFWebModule = class(TWebModule)
@@ -30,6 +34,7 @@ uses
 
   // cadastros
   EmpresaController,
+  CfopController,
 
   // nfe
   NfeConfiguracaoController,
@@ -68,6 +73,7 @@ begin
 
   // cadastros
   FEngine.AddController(TEmpresaController);
+  FEngine.AddController(TCfopcontroller);
 
   // nfe
   FEngine.AddController(TNfeConfiguracaoController);

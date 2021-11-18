@@ -44,7 +44,12 @@ begin
   Conexao.Params.Add('User_Name=' + TConstantes.BD_USUARIO);
   Conexao.Params.Add('Password=' + TConstantes.BD_SENHA);
   Conexao.DriverName := 'MySQL';
+  try
   Conexao.Connected := True;
+  except
+    raise;
+
+  end;
 end;
 
 end.
